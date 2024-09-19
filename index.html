@@ -1,19 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Role kamu??</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Squeeze Landing Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #f4f4f4, #e2e2e2);
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            margin: auto;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Pendeteksi Role Isekai</h1>
-        <p>masukin sini nama lu bro!</p>
-        <input type="text" id="nameInput" placeholder="Your name">
-        <button onclick="generateRole()">Detekai Role</button>
-        <div id="result"></div>
-    </div>
-    <script src="app.js"></script>
+
+<div class="container">
+    <img src="img/01K001.jpeg" alt="Gambar menarik">
+    <h1>DAPATKAN KHODAM!</h1>
+    <p>Masukkan nama untuk mendapatkan khodam eksklusif.</p>
+    <form action="omega2.html" method="POST">
+        <input type="text" name="nama" placeholder="Nama Lengkap" required>
+        <button type="submit">Dapatkan Akses!</button>
+    </form>
+    <p class="footer">Kami menjaga privasi Anda. Tidak ada spam!</p>
+</div>
+
 </body>
 </html>
