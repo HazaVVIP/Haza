@@ -9,7 +9,7 @@ const roles = [
 function generateRole() {
     const name = document.getElementById("nameInput").value;
     if (!name) {
-        alert("Please enter your name");
+        alert("namanya mana??");
         return;
     }
     
@@ -18,7 +18,7 @@ function generateRole() {
 
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = `
-        <h2>${name}, you are a ${selectedRole.name}!</h2>
+        <h2>${name}, kamu adalah seorang ${selectedRole.name}!</h2>
         <img src="${selectedRole.image}" alt="${selectedRole.name}">
     `;
 }
