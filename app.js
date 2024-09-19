@@ -1,9 +1,9 @@
 const roles = [
-    { name: "Warrior", image: "warrior.png" },
-    { name: "Mage", image: "mage.png" },
-    { name: "Rogue", image: "rogue.png" },
-    { name: "Healer", image: "healer.png" },
-    { name: "Archer", image: "archer.png" }
+    { name: "Warrior", image: "img/warrior.png" },
+    { name: "Mage", image: "img/mage.png" },
+    { name: "Rogue", image: "img/rogue.png" },
+    { name: "Healer", image: "img/healer.png" },
+    { name: "Archer", image: "img/archer.png" }
 ];
 
 function generateRole() {
