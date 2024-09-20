@@ -4,67 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Squeeze Landing Page</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 50px;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            max-width: 450px;
-            margin: auto;
-            transition: transform 0.3s;
-        }
-        .container:hover {
-            transform: translateY(-5px);
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-        p {
-            color: #555;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .footer {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -72,7 +12,8 @@
     <img src="img/01K001.jpeg" alt="Gambar menarik">
     <h1>DAPATKAN KHODAM!</h1>
     <p>Masukkan nama untuk mendapatkan khodam eksklusif.</p>
-    <form action="omega2.html" method="POST">
+    <!-- Form diarahkan menggunakan GET agar data bisa diteruskan melalui URL -->
+    <form action="omega2.html" method="GET">
         <input type="text" name="nama" placeholder="Nama Lengkap" required>
         <button type="submit">Dapatkan Akses!</button>
     </form>
