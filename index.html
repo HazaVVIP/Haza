@@ -4,7 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Squeeze Landing Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .stats p {
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        ul li {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        #resultSection h2 {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -12,7 +123,6 @@
     <img src="img/01K001.jpeg" alt="Gambar menarik">
     <h1>DAPATKAN KHODAM!</h1>
     <p>Masukkan nama untuk mendapatkan khodam eksklusif.</p>
-    <!-- Form tidak lagi diarahkan ke halaman lain -->
     <form id="khodamForm">
         <input type="text" id="namaInput" name="nama" placeholder="Nama Lengkap" required>
         <button type="submit">Dapatkan Akses!</button>
@@ -20,13 +130,12 @@
     <p class="footer">Kami menjaga privasi Anda. Tidak ada spam!</p>
 </div>
 
-<!-- Bagian ini akan menampilkan data setelah form dikirim -->
 <div class="container" id="resultSection" style="display: none;">
     <h1>STATUS</h1>
     <p>Nama: <span id="namaUser"></span></p>
     <p>Ras: <span id="ras"></span></p>
     <p>Peran: <span id="peran"></span></p>
-    
+
     <div class="stats">
         <p>Kekuatan: <span id="kekuatan"></span></p>
         <p>Kesehatan: <span id="kesehatan"></span></p>
@@ -36,80 +145,82 @@
 
     <h2>Keterampilan:</h2>
     <ul id="keterampilan"></ul>
-    
+
     <h2>Judul:</h2>
     <ul id="judul"></ul>
 </div>
 
 <script>
-// Data acak
-const ras = ['Manusia Kadal', 'Orc', 'Elf', 'Manusia Serigala', 'Naga'];
-const peran = ['Pedagang', 'Prajurit', 'Penyihir', 'Pemburu', 'Petualang'];
-const keterampilan = [
-    'Keahlian Logistik (Peringkat E)',
-    'Manajemen Inventaris (Peringkat S)',
-    'Rahasia Dagang (Peringkat F)',
-    'Tawar-menawar (Peringkat S)',
-    'Akumulasi Kekayaan (Peringkat E)'
-];
-const judul = [
-    'Juru Selamat Kerajaan (Peringkat S)',
-    'Raja Ahli Nujum (Peringkat A)',
-    'Pedagang Terbaik (Peringkat B)'
-];
+    // Data acak
+    const ras = ['Manusia Kadal', 'Orc', 'Elf', 'Manusia Serigala', 'Naga'];
+    const peran = ['Pedagang', 'Prajurit', 'Penyihir', 'Pemburu', 'Petualang'];
+    const keterampilan = [
+        'Keahlian Logistik (Peringkat E)',
+        'Manajemen Inventaris (Peringkat S)',
+        'Rahasia Dagang (Peringkat F)',
+        'Tawar-menawar (Peringkat S)',
+        'Akumulasi Kekayaan (Peringkat E)'
+    ];
+    const judul = [
+        'Juru Selamat Kerajaan (Peringkat S)',
+        'Raja Ahli Nujum (Peringkat A)',
+        'Pedagang Terbaik (Peringkat B)'
+    ];
 
-// Fungsi untuk mendapatkan item acak dari array
-function getRandomItem(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
-
-// Fungsi untuk menampilkan hasil setelah submit
-function showResult(namaUser) {
-    const stats = {
-        kekuatan: Math.floor(Math.random() * 100),
-        kesehatan: Math.floor(Math.random() * 100),
-        kelincahan: Math.floor(Math.random() * 100),
-        dimana: Math.floor(Math.random() * 20)
-    };
-
-    // Mengisi data ke dalam halaman
-    document.getElementById('namaUser').textContent = namaUser;
-    document.getElementById('ras').textContent = getRandomItem(ras);
-    document.getElementById('peran').textContent = getRandomItem(peran);
-    document.getElementById('kekuatan').textContent = stats.kekuatan;
-    document.getElementById('kesehatan').textContent = stats.kesehatan;
-    document.getElementById('kelincahan').textContent = stats.kelincahan;
-    document.getElementById('dimana').textContent = stats.dimana;
-
-    // Menampilkan keterampilan acak (maksimal 3)
-    const keterampilanList = document.getElementById('keterampilan');
-    keterampilanList.innerHTML = ''; // Membersihkan elemen sebelumnya
-    for (let i = 0; i < 3; i++) {
-        const li = document.createElement('li');
-        li.textContent = getRandomItem(keterampilan);
-        keterampilanList.appendChild(li);
+    // Fungsi untuk mendapatkan item acak dari array
+    function getRandomItem(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // Menampilkan judul acak (maksimal 2)
-    const judulList = document.getElementById('judul');
-    judulList.innerHTML = ''; // Membersihkan elemen sebelumnya
-    for (let i = 0; i < 2; i++) {
-        const li = document.createElement('li');
-        li.textContent = getRandomItem(judul);
-        judulList.appendChild(li);
+    // Fungsi untuk menampilkan hasil setelah submit
+    function showResult(namaUser) {
+        const stats = {
+            kekuatan: Math.floor(Math.random() * 100),
+            kesehatan: Math.floor(Math.random() * 100),
+            kelincahan: Math.floor(Math.random() * 100),
+            dimana: Math.floor(Math.random() * 20)
+        };
+
+        // Mengisi data ke dalam halaman
+        document.getElementById('namaUser').textContent = namaUser;
+        document.getElementById('ras').textContent = getRandomItem(ras);
+        document.getElementById('peran').textContent = getRandomItem(peran);
+        document.getElementById('kekuatan').textContent = stats.kekuatan;
+        document.getElementById('kesehatan').textContent = stats.kesehatan;
+        document.getElementById('kelincahan').textContent = stats.kelincahan;
+        document.getElementById('dimana').textContent = stats.dimana;
+
+        // Menampilkan keterampilan acak (maksimal 3)
+        const keterampilanList = document.getElementById('keterampilan');
+        keterampilanList.innerHTML = ''; // Membersihkan elemen sebelumnya
+        for (let i = 0; i < 3; i++) {
+            const li = document.createElement('li');
+            li.textContent = getRandomItem(keterampilan);
+            keterampilanList.appendChild(li);
+        }
+
+        // Menampilkan judul acak (maksimal 2)
+        const judulList = document.getElementById('judul');
+        judulList.innerHTML = ''; // Membersihkan elemen sebelumnya
+        for (let i = 0; i < 2; i++) {
+            const li = document.createElement('li');
+            li.textContent = getRandomItem(judul);
+            judulList.appendChild(li);
+        }
+
+        // Menyembunyikan form dan menampilkan hasil
+        document.getElementById('formSection').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'block';
     }
 
-    // Menyembunyikan form dan menampilkan hasil
-    document.getElementById('formSection').style.display = 'none';
-    document.getElementById('resultSection').style.display = 'block';
-}
-
-// Menangani submit form
-document.getElementById('khodamForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Mencegah form submit secara default
-    const namaUser = document.getElementById('namaInput').value;
-    showResult(namaUser); // Panggil fungsi untuk menampilkan hasil
-});
+    // Menangani submit form
+    document.getElementById('khodamForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah form submit secara default
+        const namaUser = document.getElementById('namaInput').value;
+        if (namaUser) { // Pastikan nama tidak kosong
+            showResult(namaUser); // Panggil fungsi untuk menampilkan hasil
+        }
+    });
 
 </script>
 
