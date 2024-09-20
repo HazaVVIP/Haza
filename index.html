@@ -6,6 +6,7 @@
     <title>Squeeze Landing Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Gaya CSS */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -87,9 +88,11 @@
         }
 
         .stats {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dua kolom yang rata */
+            gap: 10px;
             margin-top: 20px;
+            text-align: left; /* Buat teks rata kiri */
         }
 
         .stats p {
@@ -100,6 +103,7 @@
             list-style-type: none;
             padding: 0;
             margin-top: 10px;
+            text-align: left;
         }
 
         ul li {
@@ -113,6 +117,7 @@
         #resultSection h2 {
             margin-top: 20px;
             font-size: 18px;
+            text-align: left;
         }
 
     </style>
@@ -132,7 +137,7 @@
 
 <div class="container" id="resultSection" style="display: none;">
     <h1>STATUS</h1>
-    <p>Nama: <span id="namaUser"></span></p>
+    <p>Nama: <span id="namaUser"></span> (Peringkat: <span id="namaPeringkat"></span>)</p>
     <p>Ras: <span id="ras"></span></p>
     <p>Peran: <span id="peran"></span></p>
 
@@ -152,19 +157,19 @@
 
 <script>
     // Data acak
-    const ras = ['Manusia Kadal', 'Orc', 'Elf', 'Manusia Serigala', 'Naga'];
-    const peran = ['Pedagang', 'Prajurit', 'Penyihir', 'Pemburu', 'Petualang'];
+    const ras = ['Manusia Kadal', 'Orc', 'Elf', 'Manusia Serigala', 'Naga', 'Goblin', 'Vampir', 'Dewa', 'Iblis', 'Roh Hutan', 'Raksasa', 'Troll', 'Faerie', 'Ent', 'Phoenix', 'Drake', 'Suku Kucing', 'Manusia Ikan', 'Harpy', 'Minotaur'];
+    const peran = ['Pedagang', 'Prajurit', 'Penyihir', 'Pemburu', 'Petualang', 'Tukang Sihir', 'Tukang Kayu', 'Penambang', 'Pandai Besi', 'Ahli Ramuan', 'Necromancer', 'Pembawa Pesan', 'Pengintai', 'Penjaga Hutan', 'Dukun', 'Penjinak Binatang', 'Kapten', 'Gladiator', 'Penjaga', 'Tuan Tanah'];
     const keterampilan = [
-        'Keahlian Logistik (Peringkat E)',
-        'Manajemen Inventaris (Peringkat S)',
-        'Rahasia Dagang (Peringkat F)',
-        'Tawar-menawar (Peringkat S)',
-        'Akumulasi Kekayaan (Peringkat E)'
+        'Keahlian Logistik (Peringkat E)', 'Manajemen Inventaris (Peringkat S)', 'Rahasia Dagang (Peringkat F)', 'Tawar-menawar (Peringkat S)', 'Akumulasi Kekayaan (Peringkat E)',
+        'Penggunaan Sihir Gelap (Peringkat A)', 'Pemanah Ulung (Peringkat B)', 'Memasak Cepat (Peringkat C)', 'Perawatan Senjata (Peringkat D)', 'Ilmu Perbintangan (Peringkat B)',
+        'Komando Pasukan (Peringkat A)', 'Taktik Pertempuran (Peringkat S)', 'Ilmu Penyembuhan (Peringkat C)', 'Pengetahuan Herbal (Peringkat B)', 'Penggunaan Racun (Peringkat E)',
+        'Pertahanan Magis (Peringkat A)', 'Penyamaran (Peringkat S)', 'Menjinakkan Binatang (Peringkat C)', 'Pembuatan Perangkap (Peringkat D)', 'Keterampilan Menyelinap (Peringkat A)'
     ];
     const judul = [
-        'Juru Selamat Kerajaan (Peringkat S)',
-        'Raja Ahli Nujum (Peringkat A)',
-        'Pedagang Terbaik (Peringkat B)'
+        'Juru Selamat Kerajaan (Peringkat S)', 'Raja Ahli Nujum (Peringkat A)', 'Pedagang Terbaik (Peringkat B)', 'Penjaga Gerbang Surga (Peringkat S)', 'Pemimpin Pasukan Hitam (Peringkat A)',
+        'Penghancur Klan Naga (Peringkat B)', 'Pahlawan Tanpa Tanding (Peringkat A)', 'Raja Pedagang Lintas Batas (Peringkat S)', 'Penguasa Laut (Peringkat A)', 'Pengendali Zaman Kuno (Peringkat S)',
+        'Pelindung Kota Tua (Peringkat B)', 'Penakluk Pulau Terpencil (Peringkat A)', 'Penguasa Hutan Terlarang (Peringkat B)', 'Penghukum Para Raja (Peringkat A)', 'Ahli Pemburu Iblis (Peringkat S)',
+        'Penggagas Perdagangan Baru (Peringkat B)', 'Pengawal Bayangan (Peringkat A)', 'Pemimpin Revolusi (Peringkat S)', 'Pahlawan Legenda (Peringkat B)', 'Sang Penakluk Malam (Peringkat A)'
     ];
 
     // Fungsi untuk mendapatkan item acak dari array
@@ -172,57 +177,63 @@
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // Fungsi untuk menampilkan hasil setelah submit
-    function showResult(namaUser) {
-        const stats = {
-            kekuatan: Math.floor(Math.random() * 100),
-            kesehatan: Math.floor(Math.random() * 100),
-            kelincahan: Math.floor(Math.random() * 100),
-            dimana: Math.floor(Math.random() * 20)
-        };
+    // Fungsi untuk menghasilkan nomor peringkat berdasarkan probabilitas
+    function getRandomRankWithProbability() {
+        const probability = Math.random();
+        if (probability <= 0.01) {
+            return Math.floor(Math.random() * 100) + 1;  // 1-100 (1% chance)
+        } else if (probability <= 0.1) {
+            return Math.floor(Math.random() * 900) + 101;  // 101-1000 (9% chance)
+        } else if (probability <= 0.5) {
+            return Math.floor(Math.random() * 4000) + 1001;  // 1001-5000 (40% chance)
+        } else {
+            return Math.floor(Math.random() * 5000) + 5001;  // 5001-10000 (50% chance)
+        }
+    }
 
-        // Mengisi data ke dalam halaman
-        document.getElementById('namaUser').textContent = namaUser;
-        document.getElementById('ras').textContent = getRandomItem(ras);
-        document.getElementById('peran').textContent = getRandomItem(peran);
-        document.getElementById('kekuatan').textContent = stats.kekuatan;
-        document.getElementById('kesehatan').textContent = stats.kesehatan;
-        document.getElementById('kelincahan').textContent = stats.kelincahan;
-        document.getElementById('dimana').textContent = stats.dimana;
+    // Fungsi untuk menghasilkan status khodam
+    function generateKhodam(name) {
+        // Menampilkan hasil pada halaman
+        document.getElementById("namaUser").innerText = name;
+        document.getElementById("namaPeringkat").innerText = getRandomRankWithProbability();
+        document.getElementById("ras").innerText = getRandomItem(ras);
+        document.getElementById("peran").innerText = getRandomItem(peran);
+        document.getElementById("kekuatan").innerText = Math.floor(Math.random() * 100);
+        document.getElementById("kesehatan").innerText = Math.floor(Math.random() * 100);
+        document.getElementById("kelincahan").innerText = Math.floor(Math.random() * 100);
+        document.getElementById("dimana").innerText = Math.floor(Math.random() * 100);
 
-        // Menampilkan keterampilan acak (maksimal 3)
-        const keterampilanList = document.getElementById('keterampilan');
-        keterampilanList.innerHTML = ''; // Membersihkan elemen sebelumnya
+        // Menambahkan keterampilan acak
+        const skillList = document.getElementById("keterampilan");
+        skillList.innerHTML = ''; // Reset daftar
         for (let i = 0; i < 3; i++) {
-            const li = document.createElement('li');
-            li.textContent = getRandomItem(keterampilan);
-            keterampilanList.appendChild(li);
+            const skill = document.createElement('li');
+            skill.innerText = getRandomItem(keterampilan);
+            skillList.appendChild(skill);
         }
 
-        // Menampilkan judul acak (maksimal 2)
-        const judulList = document.getElementById('judul');
-        judulList.innerHTML = ''; // Membersihkan elemen sebelumnya
+        // Menambahkan judul acak
+        const titleList = document.getElementById("judul");
+        titleList.innerHTML = ''; // Reset daftar
         for (let i = 0; i < 2; i++) {
-            const li = document.createElement('li');
-            li.textContent = getRandomItem(judul);
-            judulList.appendChild(li);
+            const title = document.createElement('li');
+            title.innerText = getRandomItem(judul);
+            titleList.appendChild(title);
         }
 
         // Menyembunyikan form dan menampilkan hasil
-        document.getElementById('formSection').style.display = 'none';
-        document.getElementById('resultSection').style.display = 'block';
+        document.getElementById("formSection").style.display = 'none';
+        document.getElementById("resultSection").style.display = 'block';
     }
 
-    // Menangani submit form
-    document.getElementById('khodamForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Mencegah form submit secara default
-        const namaUser = document.getElementById('namaInput').value;
-        if (namaUser) { // Pastikan nama tidak kosong
-            showResult(namaUser); // Panggil fungsi untuk menampilkan hasil
-        }
+    // Event listener untuk form submit
+    document.getElementById("khodamForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("namaInput").value;
+        generateKhodam(name);
     });
-
 </script>
 
 </body>
 </html>
+
